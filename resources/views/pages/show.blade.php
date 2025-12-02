@@ -1,0 +1,51 @@
+<x-layout title=" {{ $product->name }} ">
+    <div class="container my-5">
+
+        <div class="row">
+
+            {{-- Kolom Kiri: Gambar Produk --}}
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="card shadow-sm border-0 bg-light">
+                    {{-- Gambar Utama (Placeholder) --}}
+                    <img src="{{ asset('images/product.jpg') }}" class="card-img-top p-3 rounded-5"
+                        alt="Gambar {{ $product->name }}">
+                </div>
+            </div>
+
+            {{-- Kolom Kanan: Detail Produk --}}
+            <div class="col-lg-7">
+
+                {{-- Nama Produk (Judul Utama) --}}
+                <h1 class="fs-1 fw-bold text-dark mb-2">{{ $product->name }}</h1>
+
+                <hr>
+
+                {{-- Deskripsi Produk --}}
+                <div class="card shadow-sm border-light">
+                    <h5 class="fs-5 text-secondary mb-3">Deskripsi Produk</h5>
+                    <p class="fs-5 lead text-secondary">
+                        {{ $product->description }}
+                    </p>
+                </div>
+
+                {{-- Aksi --}}
+                <div class="mt-4 d-flex justify-content-between">
+                    <div class="d-flex align-items-baseline mb-4">
+                        <span class="fs-2 text-muted me-2">Harga:</span>
+                        <span class="fs-2 fw-bolder text-success">
+                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                        </span>
+                    </div>
+                    <div>
+                        <a href=" {{route('products')}} " class="btn btn-secondary">KEMBALI</a>
+                        <a href=" {{route('products.edit', $product->id)}} " class="btn btn-success">EDIT</a>
+                        <a href=" {{route('products.delete', $product->id)}} " class="btn btn-danger">DELETE</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</x-layout>
