@@ -17,9 +17,7 @@ class ProductSeeder extends Seeder
 
         //
     {
-        // Pastikan tabel kategori memiliki data sebelum membuat produk
         if (CategoryProduct::count() === 0) {
-            // Opsional: Buat kategori jika belum ada
             DB::table('category_products')->insert([
                 ['name' => 'Elektronik'],
                 ['name' => 'Pakaian'],
@@ -28,7 +26,7 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-        // Buat 100 record produk menggunakan ProductFactory
+        // Buat 100 record produk 
         Product::factory()->count(100)->create();
 
     }

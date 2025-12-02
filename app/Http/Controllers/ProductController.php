@@ -11,6 +11,9 @@ class ProductController extends Controller
     public function index(Request $request)
     {
 
+        // Parameter Baru untuk Sort/Urutkan
+        $sortBy = $request->query('sort_by', 'created_at'); // Kolom default untuk sort
+        $sortOrder = $request->query('sort_order', 'desc'); // Urutan default (asc/desc)
         // 1. Ambil semua parameter filter dari Request
         $category_id = $request->query('category_id');
         $searchQuery = $request->query('search');
@@ -45,19 +48,31 @@ class ProductController extends Controller
             $productsQuery->where('price', '<=', $maxPrice);
         }
 
+        // --- 4. LOGIKA SORTING/URUTKAN ---
+        $allowedSorts = ['name', 'price', 'created_at'];
+        $allowedOrders = ['asc', 'desc'];
+
+        // Validasi dan set default jika tidak valid
+        $sortBy = in_array($sortBy, $allowedSorts) ? $sortBy : 'created_at';
+        $sortOrder = in_array($sortOrder, $allowedOrders) ? $sortOrder : 'desc';
+
+        // Terapkan sorting ke Query Builder
+        $productsQuery->orderBy($sortBy, $sortOrder);
+
         // 4. Eksekusi Query dan Ambil Hasil
         $products = $productsQuery->get();
 
-        // 5. Kirim data ke View (compact digunakan untuk mempertahankan nilai filter di form/input)
+        // 5. Kirim data ke View
         return view('pages.products', compact(
             'products',
             'categories',
             'searchQuery',
-            'category_id', // Kirim ID yang difilter saat ini
+            'category_id',
             'minPrice',
-            'maxPrice'
+            'maxPrice',
+            'sortBy',
+            'sortOrder'
         ));
-
     }
 
     public function show($id)
@@ -125,31 +140,4 @@ class ProductController extends Controller
 
         return redirect()->back()->with('error', 'produk tidak ada');
     }
-
-    // public function searchByCategory(Request $request, $category_id)
-    // {
-    //     $currentCategory = CategoryProduct::findOrFail($category_id);
-
-    //     $products = Product::with('category')
-    //         ->where('category_product_id', $category_id)
-    //         ->get();
-
-    //     $categories = CategoryProduct::all();
-
-    //     return view('pages.filter', compact('products', 'currentCategory', 'categories'));
-    // }
-
-    // public function searchByName(Request $request)
-    // {
-    //     $searchQuery = $request->query('search');
-    //     $productsQuery = Product::query();
-
-    //     if ($searchQuery) {
-    //         $productsQuery->where('name', 'LIKE', '%', $searchQuery, '%');
-    //     }
-    //     $products = $productsQuery->get();
-
-
-    //     return view('pages.filter', compact('products', 'searchQuery'));
-    // }
 }
