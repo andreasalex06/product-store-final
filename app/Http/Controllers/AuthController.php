@@ -33,32 +33,32 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-{
-    $credentials = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required'],
-    ]);
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-    // dd($credentials, Auth::attempt($credentials));
+        // dd($credentials, Auth::attempt($credentials));
 
-    $remember = $request->filled('remember');
+        $remember = $request->filled('remember');
 
-    if (Auth::attempt($credentials, $remember)) {
-        $request->session()->regenerate();
-        return redirect()->route('home')->with('success', 'Berhasil login!');
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+            return redirect()->route('home')->with('success', 'Berhasil login!');
+        }
+
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->onlyInput('email');
     }
 
-    return back()->withErrors([
-        'email' => 'Email atau password salah.',
-    ])->onlyInput('email');
-}
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-public function logout(Request $request)
-{
-    Auth::logout();                                
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    return redirect()->route('login.form')->with('success', 'Anda berhasil logout.');
-}
+        return redirect()->route('login.form')->with('success', 'Anda berhasil logout.');
+    }
 }

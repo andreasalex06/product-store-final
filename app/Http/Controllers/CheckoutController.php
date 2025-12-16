@@ -46,7 +46,7 @@ class CheckoutController extends Controller
             'total' => $cart->total()
         ]);
 
-        // 2. PINDAHKAN ITEM CART → ORDER_ITEMS
+        // 2. PINDAHKAN ITEM CART → ORDER_ITEMS / invoice
         foreach ($cart->items as $item) {
             OrderItem::create([
                 'order_id' => $order->id,

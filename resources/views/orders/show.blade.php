@@ -90,6 +90,7 @@
 
             <h4 class="mb-0 fw-bold">Total Pembayaran:</h4>
 
+            {{-- get total order --}}
             <h3 class="mb-0 fw-bold text-success">
                 Rp {{ number_format($order->total, 0, ',', '.') }}
             </h3>
