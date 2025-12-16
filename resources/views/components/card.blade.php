@@ -1,4 +1,4 @@
-<div class="card sh h-100">
+<div class="card shadow-sm h-100">
 
     <div class="ratio ratio-1x1 position-relative">
         <div class="position-absolute position-relative z-3 d-flex justify-content-end align-items-end">
@@ -23,27 +23,25 @@
             {{ Str::limit($product->description, 50) }}
         </p>
 
-
-
         <div class="d-flex justify-content-end align-items-center">
             <a href="{{ route('products.show', ['id' => $product->id]) }}"
-                class="btn rounded-3"><i class="fa-solid fa-info"></i></a>
+                class="btn btn-sm rounded-3"><i class="fa-solid fa-info"></i></a>
 
             <form action="{{ route('cart.add', $product->id) }}" method="POST" class="">
                 @csrf
-                <button type="submit" class="btn rounded-3">
+                <button type="submit" class="btn btn-sm rounded-3">
                     <i class="fa-solid fa-basket-shopping"></i>
                 </button>
             </form>
 
             @auth
-                <a class="text-decoration-none rounded-3 btn"
+                <a class="text-decoration-none btn btn-sm rounded-3"
                     href=" {{ route('products.edit', ['id' => $product->id]) }} "><i class="fa-solid fa-pen-to-square"></i></a>
 
                 <form action=" {{ route('products.delete', ['id' => $product->id]) }} " method="POST">
                     @csrf
                     <button type="submit" onclick=" return confirm('apakah anda yakin ingin mengapus produk?')"
-                        class="btn"><i class="fa-solid fa-trash"></i></button>
+                        class="btn btn-sm rounded-3"><i class="fa-solid fa-trash"></i></button>
                 </form>
             @endauth
 

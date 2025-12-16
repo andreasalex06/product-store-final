@@ -52,7 +52,7 @@ class ProductController extends Controller
         $productsQuery->orderBy($sortBy, $sortOrder);
 
         // Eksekusi query — gunakan paginate untuk production
-        $products = $productsQuery->paginate(20)->withQueryString(); // ->paginate(20)->withQueryString();
+        $products = $productsQuery->paginate(8)->withQueryString(); // ->paginate(20)->withQueryString();
 
         return view('pages.products', compact(
             'products',
