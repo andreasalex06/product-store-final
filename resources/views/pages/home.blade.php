@@ -2,33 +2,50 @@
 
     <div class="container mt-4">
 
-        {{-- Jumbotron / Hero Section --}}
-        <div class="mb-4 rounded-3 d-flex flex-wrap overflow-hidden" style="min-height: 400px;">
-
-            <div class="col-md-6 col-12"
-                style="
-                    background: url('{{ asset('images/banner.jpg') }}') no-repeat center center;
-                    background-size: cover;
-                    min-height: 250px;
-                ">
+        <div id="carouselExampleCaptions" class="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
             </div>
-
-            <div class="col-md-6 col-12 p-5 d-flex align-items-center bg-success text-white">
-
-                <div class="py-3 py-md-0">
-
-                    <h1 class="display-5 fw-bold">Selamat Datang di Toko Produk Kami!</h1>
-
-                    <p class="fs-5">
-                        Telusuri koleksi produk terbaik kami. Website ini dirancang untuk memantau stok barang yang tersedia,
-                        dan dilengkapi dengan fitur filter canggih yang mampu melihat produk berdasarkan harga, kategori, atau urutan nama produk.
-                    </p>
-
-                    <a href="{{ route('products') }}" class="btn btn-light btn-lg">Lihat Semua Produk</a>
-
+            <div class="carousel-inner rounded-4 ratio ratio-21x9">
+                <div class="carousel-item active">
+                    <img src=" {{ asset('images/product1.jpg') }} " class="d-block w-100 carousel-img" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>New Iphone 17 Pro</h5>
+                        <p>Produk terbaru dari Apple dengan spesifikasi terbaik.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/product2.jpg') }}" class="d-block w-100 carousel-img" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Canon GX7</h5>
+                        <p>Menggunakan teknologi terdepan untuk hasil foto berkualitas tinggi.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/product3.jpg') }}" class="d-block w-100 carousel-img" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Macbook Air m4</h5>
+                        <p>Dengan performa terbaik dan desain elegan.</p>
+                    </div>
                 </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+
 
     </div>
 
@@ -43,8 +60,7 @@
                 margin-top: 5px;
                 margin-bottom: 30px; /* Jarak lebih besar ke konten di bawah */
                 opacity: 1;
-            "
-        >
+            ">
     </div>
 
 
@@ -54,8 +70,10 @@
         <div class="row text-center mb-5">
             <div class="col-lg-8 mx-auto">
                 <p class="lead text-muted">
-                    Kami hadir sebagai platform manajemen produk terintegrasi yang membantu Anda melacak, mengelola, dan menampilkan inventaris Anda dengan mudah.
-                    Fokus utama kami adalah akurasi stok dan kemudahan pencarian, sehingga Anda selalu tahu apa yang Anda miliki dan pelanggan Anda dapat menemukan apa yang mereka cari dengan cepat.
+                    Kami hadir sebagai platform manajemen produk terintegrasi yang membantu Anda melacak, mengelola, dan
+                    menampilkan inventaris Anda dengan mudah.
+                    Fokus utama kami adalah akurasi stok dan kemudahan pencarian, sehingga Anda selalu tahu apa yang
+                    Anda miliki dan pelanggan Anda dapat menemukan apa yang mereka cari dengan cepat.
                 </p>
             </div>
         </div>
@@ -75,7 +93,8 @@
                 <div class="card shadow-sm h-100 p-4 border-0">
                     <i class="fas fa-search-dollar fa-3x text-primary mb-3"></i>
                     <h5 class="card-title fw-bold">Filter Cepat</h5>
-                    <p class="card-text text-muted">Filter produk berdasarkan harga, nama, dan kategori secara instan.</p>
+                    <p class="card-text text-muted">Filter produk berdasarkan harga, nama, dan kategori secara instan.
+                    </p>
                 </div>
             </div>
 
@@ -92,7 +111,7 @@
         <div class="text-center mt-5 mb-5">
             <h2 class="fw-bold">Siap Mencari Produk Terbaik?</h2>
             <p class="lead mb-4">Jelajahi seluruh katalog produk kami dan temukan apa yang Anda butuhkan.</p>
-            <a href="{{ route('products') }}" class="btn btn-success btn-lg shadow-lg">Mulai Cari Sekarang →</a>
+            <a href="{{ route('products') }}" class="btn btn-warning btn-lg shadow-lg">Mulai Cari Sekarang <i class="fa-solid fa-magnifying-glass"></i></a>
         </div>
 
     </div>

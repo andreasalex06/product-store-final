@@ -1,0 +1,10 @@
+.carousel-img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+#filterSidebar {
+    background-color: #f7df46 !important;
+}
+

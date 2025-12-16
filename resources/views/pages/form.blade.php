@@ -1,10 +1,10 @@
 <x-layout title="Form Produk">
-    <div class="container mt-4">
+    <div class="container border p-5 rounded-3 border-2 mt-4">
 
         <h2>Form Input Produk</h2>
 
-        <form method="post" class="was-validated">
-            @csrf 
+        <form method="post" class="was-validated" enctype="multipart/form-data">
+            @csrf
 
             <x-form.group for="name" label="Nama Produk">
                 <input type="text" name="name" id="name" class="form-control" required
@@ -20,6 +20,16 @@
                     value="{{ old('price') ?? ($product->price ?? '') }}">
             </x-form.group>
 
+            <x-form.group for="image" label="Foto Produk">
+                <input type="file" name="image" id="image"
+                    class="form-control @error('foto')
+                    is-invalid
+                @enderror" required>
+                @error('foto')
+                    <small class="text-danger"> {{ $message }} </small>
+                @enderror
+            </x-form.group>
+
             <label for="category" class="mb-2">Kategori</label>
             <select class="form-select" aria-label="Default select example" name="category_product_id" required>
                 @foreach ($categories as $category)
@@ -28,7 +38,7 @@
             </select>
 
             <div class="mb-3 mt-3">
-                <button type="submit" class="btn btn-primary">Simpan Produk</button>
+                <button type="submit" class="btn btn-warning">Simpan Produk</button>
             </div>
 
         </form>

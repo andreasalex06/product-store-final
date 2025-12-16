@@ -4,8 +4,8 @@
         <div class="row">
 
             <div class="col-lg-5 mb-4 mb-lg-0">
-                <div class="card shadow-sm border-0 bg-light">
-                    <img src="{{ asset('images/product.jpg') }}" class="card-img-top p-3 rounded-5"
+                <div class="card shadow-sm">
+                    <img src="{{ asset('storage/products_image/' . $product->image) }}" class="card-img-top p-3 rounded-5"
                         alt="Gambar {{ $product->name }}">
                 </div>
             </div>
@@ -31,9 +31,9 @@
                         </span>
                     </div>
                     <div>
-                        <a href=" {{route('products')}} " class="btn btn-secondary">KEMBALI</a>
-                        <a href=" {{route('products.edit', $product->id)}} " class="btn btn-success">EDIT</a>
-                        <a href=" {{route('products.delete', $product->id)}} " class="btn btn-danger">DELETE</a>
+                        <a href=" {{ route('products') }} " class="btn btn-secondary">KEMBALI</a>
+                        <a href=" {{ route('products.edit', $product->id) }} " class="btn btn-success">EDIT</a>
+                        <a href=" {{ route('products.delete', $product->id) }} " class="btn btn-danger">DELETE</a>
                     </div>
                 </div>
 

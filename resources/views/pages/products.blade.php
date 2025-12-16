@@ -1,93 +1,132 @@
 <x-layout title="Daftar Produk">
-    <div class="container mt-1">
-        <div class="container d-flex bg-success rounded-3 px-4 py-2 align-items-center justify-content-between my-2">
-            <h3 class="text-light">Daftar Produk</h3>
 
-            <form method="GET" action="{{ route('products') }}" class="d-flex rounded">
+<style>
+    /* Force single column on very small screens (<=360px) */
+    @media (max-width: 360px) {
+        .product-col {
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+    }
+</style>
 
-                <div class="container">
+<div class="container mt-3">
 
-                    <div class="mb-3">
-                        <label for="search" class="text-light form-label">Nama Produk</label>
-                        <input type="text" name="search" id="search" class="form-control"
-                            value="{{ $searchQuery ?? '' }}" placeholder="Cari berdasarkan nama...">
-                    </div>
+    {{-- Tombol filter untuk mobile --}}
+    <button class="btn btn-outline-secondary btn-sm d-md-none mb-2"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#filterSidebar"
+        aria-expanded="false"
+        aria-controls="filterSidebar">
+        Tampilkan Filter
+    </button>
 
-                    <div class="mb-3">
-                        <label for="category_id" class="text-light form-label">Kategori</label>
-                        <select name="category_id" id="category_id" class="form-select">
-                            <option value="">Semua Kategori</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{-- Pertahankan pilihan kategori saat ini --}} @selected($category_id == $category->id)>
-                                    {{ $category->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+    <div class="row">
 
-                </div>
+        {{-- SIDEBAR FILTER --}}
+        <div class="col-md-3 mb-3">
+            <div id="filterSidebar" class="collapse d-md-block">
+                <div class="rounded-3 border border-2 p-3" style="background-color: #f3f3f3">
 
-                <div class="container">
+                    <h5 class="fw-bold mb-3">Filter Produk</h5>
 
-                    <div class="mb-3">
-                        <label for="sort_by" class="text-light form-label">Urutkan Berdasarkan</label>
-                        <select name="sort_by" id="sort_by" class="form-select mb-2">
-                            <option value="created_at" @selected(($sortBy ?? 'created_at') == 'created_at')>Terbaru</option>
-                            <option value="name" @selected(($sortBy ?? '') == 'name')>Nama Produk</option>
-                            <option value="price" @selected(($sortBy ?? '') == 'price')>Harga</option>
-                        </select>
+                    <form method="GET" action="{{ route('products') }}" class="w-100">
 
-                        <select name="sort_order" id="sort_order" class="form-select">
-                            <option value="desc" @selected(($sortOrder ?? 'desc') == 'desc')>(Z-A/Termahal)</option>
-                            <option value="asc" @selected(($sortOrder ?? '') == 'asc')>(A-Z/Termurah)</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <div class="container">
-
-                    <div class="row mb-3">
-                        <label class="form-label text-light">Rentang Harga</label>
-                        <div class="col-6">
-                            <input type="number" name="min_price" class="form-control" placeholder="Min Harga"
-                                value="{{ $minPrice ?? '' }}" min="0">
+                        {{-- Nama Produk --}}
+                        <div class="mb-3">
+                            <label class="form-label">Nama Produk</label>
+                            <input type="text" name="search" class="form-control form-control-sm"
+                                value="{{ $searchQuery ?? '' }}" placeholder="Cari produk...">
                         </div>
-                        <div class="col-6">
-                            <input type="number" name="max_price" class="form-control" placeholder="Max Harga"
-                                value="{{ $maxPrice ?? '' }}" min="0">
+
+                        {{-- Kategori --}}
+                        <div class="mb-3">
+                            <label class="form-label">Kategori</label>
+                            <select name="category_id" class="form-select form-select-sm">
+                                <option value="">Semua Kategori</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" @selected($category_id == $category->id)>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-                    </div>
 
-                    <div class="d-flex align-items-center justify-content-center gap-2">
-                        <a href="{{ route('products') }}" class="flex-fill btn btn-danger btn-sm">Reset</a>
-                        <button type="submit" class="flex-fill btn btn-primary btn-sm">Terapkan Filter</button>
+                        {{-- Sorting --}}
+                        <div class="mb-3">
+                            <label class="form-label">Urutkan</label>
+                            <select name="sort_by" class="form-select form-select-sm mb-1">
+                                <option value="created_at" @selected(($sortBy ?? 'created_at') == 'created_at')>Terbaru</option>
+                                <option value="name" @selected($sortBy == 'name')>Nama</option>
+                                <option value="price" @selected($sortBy == 'price')>Harga</option>
+                            </select>
 
-                    </div>
+                            <select name="sort_order" class="form-select form-select-sm">
+                                <option value="desc" @selected(($sortOrder ?? 'desc') == 'desc')>Z-A / Termahal</option>
+                                <option value="asc" @selected($sortOrder == 'asc')>A-Z / Termurah</option>
+                            </select>
+                        </div>
+
+                        {{-- Harga --}}
+                        <div class="mb-3">
+                            <label class="form-label">Rentang Harga</label>
+                            <div class="d-flex gap-2">
+                                <input type="number" name="min_price" class="form-control form-control-sm"
+                                    placeholder="Min" min="0" value="{{ $minPrice ?? '' }}">
+                                <input type="number" name="max_price" class="form-control form-control-sm"
+                                    placeholder="Max" min="0" value="{{ $maxPrice ?? '' }}">
+                            </div>
+                        </div>
+
+                        {{-- Buttons --}}
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('products') }}" class="btn btn-danger btn-sm w-50">Reset</a>
+                            <button type="submit" class="btn btn-primary btn-sm w-50">Filter</button>
+                        </div>
+
+                    </form>
 
                 </div>
-            </form>
-
-
-
+            </div>
         </div>
-        <div class="row">
 
-            @if ($products->isEmpty())
-                <div class="alert alert-warning text-center mt-3" role="alert">
-                    Produk tidak ditemukan dengan filter yang diterapkan.
+        {{-- PRODUK --}}
+        <div class="col-md-9">
+
+            <h3 class="mb-2">Daftar Produk</h3>
+
+            <div class="row g-2">
+                @if ($products->isEmpty())
+                    <div class="col-12">
+                        <div class="alert alert-warning text-center">Produk tidak ditemukan.</div>
+                    </div>
+                @endif
+
+                @foreach ($products as $product)
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 product-col">
+                        <x-card :product="$product" />
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- Pagination --}}
+            <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+                {{ $products->links() }}
+
+                <div class="text-muted small">
+                    @if($products->total() > 0)
+                        Menampilkan {{ $products->firstItem() }} - {{ $products->lastItem() }}
+                        dari {{ $products->total() }} produk
+                    @else
+                        Menampilkan 0 produk
+                    @endif
                 </div>
-            @endif
-
-            @foreach ($products as $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-
-                    <x-card :product="$product" />
-
-                </div>
-            @endforeach
+            </div>
 
         </div>
 
     </div>
+</div>
+
 </x-layout>

@@ -26,8 +26,5 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-        // Buat 100 record produk 
-        Product::factory()->count(100)->create();
-
     }
 }

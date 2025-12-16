@@ -9,113 +9,194 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         integrity="..." crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 </head>
 
 <body>
 
     {{-- navigasi --}}
-    <nav class="sticky-top navbar navbar-expand-lg bg-light">
-        <div class="container-fluid px-5">
-            <a class="navbar-brand" href=" {{ route('home') }} ">Andre</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <nav class="navbar navbar-expand-lg shadow sticky-top" style="background-color: #ffffff;">
+        <div class="container-fluid px-4">
+
+            {{-- Brand --}}
+            <a class="navbar-brand fw-bold text-warning" href="{{ route('home') }}">Alibobo</a>
+
+            <div class="d-flex justify-content-center align-items-center">
+
+                {{-- Mobile toggle --}}
+                <div class="d-lg-none d-flex gap-2 me-2">
+                    @guest
+                        <a href="{{ route('login.form') }}" class="btn btn-primary btn-sm">Login</a>
+                        <a href="{{ route('register.form') }}" class="btn btn-outline-primary btn-sm">Register</a>
+                    @endguest
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            {{-- Navbar content --}}
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+
+                {{-- LEFT MENU --}}
+                <ul class="navbar-nav me-auto">
+
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href=" {{ route('home') }} ">Home</a>
+                        <a class="nav-link fw-semibold {{ request()->routeIs('home') ? 'active fw-bold' : '' }}"
+                            href="{{ route('home') }}">
+                            Home
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href=" {{ route('products') }} ">Product</a>
+                        <a class="nav-link fw-semibold {{ request()->routeIs('products') ? 'active fw-bold' : '' }}"
+                            href="{{ route('products') }}">
+                            Produk
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href=" {{ route('products.create') }} ">Tambah Product</a>
-                    </li>
+
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('products.create') ? 'active fw-semibold' : '' }}"
+                                href="{{ route('products.create') }}">
+                                Tambah Produk
+                            </a>
+                        </li>
+                    @endauth
+
                 </ul>
 
+                {{-- RIGHT MENU --}}
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                    @auth
+                        {{-- Keranjang --}}
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('cart.index') ? 'active fw-semibold' : '' }}"
+                                href="{{ route('cart.index') }}">
+                                <i class="fa-solid fa-basket-shopping"></i> Keranjang
+                            </a>
+                        </li>
+
+                        {{-- Pesanan --}}
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('orders.index') ? 'active fw-semibold' : '' }}"
+                                href="{{ route('orders.index') }}">
+                                <i class="fa-solid fa-box"></i> Pesanan
+                            </a>
+                        </li>
+
+                        @auth
+                            <span class="border-warning border-2 border-start ps-2">Halo, {{ Auth::user()->name }} </span>
+                        @endauth
+                        {{-- Logout --}}
+                        <li class="nav-item ms-3">
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                            </form>
+                        </li>
+                    @endauth
+
+                    @guest
+                        <li class="nav-item">
+                            <a href="{{ route('login.form') }}" class="btn btn-primary btn-sm me-1">Login</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('register.form') }}" class="btn btn-outline-primary btn-sm">Register</a>
+                        </li>
+                    @endguest
+
+                </ul>
             </div>
+
         </div>
     </nav>
 
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
+
+
     {{ $slot }}
 
-    <footer class="bg-dark text-white mt-5 pt-5 pb-4">
-        <div class="container text-center text-md-left">
+    <footer class="footer-modern bg-dark text-white mt-5 pt-5 pb-4">
+        <div class="container">
 
-            <div class="row text-center text-md-left">
+            <div class="row gy-4">
 
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-primary">Andre Dev</h5>
-                    <p class="text-secondary">
-                        Menyediakan solusi teknologi terdepan untuk membantu bisnis Anda bertumbuh dan berkembang
-                        di era digital.
+                {{-- Brand + Deskripsi --}}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5 class="text-uppercase fw-bold text-light mb-3">Alibobo</h5>
+                    <p class="text-light opacity-75">
+                        Solusi teknologi modern untuk membantu bisnis berkembang di era digital.
                     </p>
-                    <div class="social-links mt-3">
-                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-linkedin-in fa-lg"></i></a>
+
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="#" class="text-white fs-5 opacity-75 hover-light">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-white fs-5 opacity-75 hover-light">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-white fs-5 opacity-75 hover-light">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-white fs-5 opacity-75 hover-light">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
                     </div>
                 </div>
-                <hr class="w-100 clearfix d-md-none">
 
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-white">Produk</h5>
-                    <p>
-                        <a href="#" class="text-white" style="text-decoration: none;">Web Development</a>
+                {{-- Produk --}}
+                <div class="col-6 col-md-3 col-lg-2">
+                    <h6 class="text-uppercase fw-bold mb-3">Produk</h6>
+                    <ul class="list-unstyled small">
+                        <li>Web Development</li>
+                        <li>Accounting</li>
+                        <li>UI/UX</li>
+                        <li>Pricing</li>
+                    </ul>
+                </div>
+
+                {{-- Kontak --}}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h6 class="text-uppercase fw-bold mb-3">Kontak</h6>
+                    <p class="small opacity-75 mb-1">
+                        <i class="fas fa-home me-2"></i> Jakarta, Indonesia
                     </p>
-                    <p>
-                        <a href="#" class="text-white" style="text-decoration: none;">Accounting</a>
+                    <p class="small opacity-75 mb-1">
+                        <i class="fas fa-envelope me-2"></i> andreasalexyz@gmail.com
                     </p>
-                    <p>
-                        <a href="#" class="text-white" style="text-decoration: none;">UI/UX</a>
-                    </p>
-                    <p>
-                        <a href="#" class="text-white" style="text-decoration: none;">Pricing</a>
+                    <p class="small opacity-75 mb-1">
+                        <i class="fas fa-phone me-2"></i> +62 8999999367
                     </p>
                 </div>
-                <hr class="w-100 clearfix d-md-none">
 
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-white">Perusahaan</h5>
-                    <p>
-                        <a href="#" class="text-white" style="text-decoration: none;">Tentang Kami</a>
-                    </p>
-                </div>
-                <hr class="w-100 clearfix d-md-none">
-
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-white">Kontak</h5>
-                    <p>
-                        <i class="fas fa-home mr-3 text-secondary"></i> Jakarta, Indonesia
-                    </p>
-                    <p>
-                        <i class="fas fa-envelope mr-3 text-secondary"></i> andreasalexyz@gmail.com
-                    </p>
-                    <p>
-                        <i class="fas fa-phone mr-3 text-secondary"></i> +62 8999999367
-                    </p>
-                </div>
             </div>
 
-            <hr class="mb-4 bg-secondary">
+            <hr class="border-secondary my-4">
 
-            <div class="row align-items-center justify-content-center">
-                <div class="d-flex justify-content-center col-md-7 col-lg-8">
-                    <p class="text-center text-md-start">
-                        Hak Cipta ©
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script>
-                        <a href="#" style="text-decoration: none;">
-                            <strong class="text-primary">AndreDev</strong>
-                        </a>. Semua hak dilindungi.
-                    </p>
-                </div>
+            {{-- Copyright --}}
+            <div class="text-center small opacity-75">
+                Hak Cipta ©
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>
+                <strong class="text-warning">Alibobo</strong>. Semua hak dilindungi.
             </div>
+
         </div>
     </footer>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
