@@ -4,7 +4,7 @@
         <div class="position-absolute position-relative z-3 d-flex justify-content-end align-items-end">
             <span class="badge bg-secondary position-absolute mb-2 me-2">{{ $product->category->name }}</span>
         </div>
-        <img src="{{ asset('storage/products_image/' . $product->image) }}" class="card-img-top"
+        <img loading="lazy" src="{{ asset('storage/products_image/' . $product->image) }}" class="card-img-top"
             alt="Gambar {{ $product->name }}" style="object-fit: cover;">
     </div>
 

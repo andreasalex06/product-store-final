@@ -16,7 +16,7 @@
     <button class="btn btn-outline-secondary btn-sm d-md-none mb-2"
         type="button"
         data-bs-toggle="collapse"
-        data-bs-target="#filterSidebar"
+        data-bs-target="#filter"
         aria-expanded="false"
         aria-controls="filterSidebar">
         Tampilkan Filter
@@ -26,8 +26,8 @@
 
         {{-- SIDEBAR FILTER --}}
         <div class="col-md-3 mb-3">
-            <div id="filterSidebar" class="collapse d-md-block">
-                <div class="rounded-3 border border-2 p-3" style="background-color: #f3f3f3">
+            <div class="collapse d-md-block" id="filter">
+                <div class="rounded-4 border border-2 p-3" style="background-color: #f3f3f3">
 
                     <h5 class="fw-bold mb-3">Filter Produk</h5>
 

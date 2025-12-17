@@ -67,16 +67,24 @@
     <div class="container konten-produk">
 
         {{-- Bagian Deskripsi Store --}}
-        <div class="row text-center mb-5">
-            <div class="col-lg-8 mx-auto">
-                <p class="lead text-muted">
-                    Kami hadir sebagai platform manajemen produk terintegrasi yang membantu Anda melacak, mengelola, dan
-                    menampilkan inventaris Anda dengan mudah.
-                    Fokus utama kami adalah akurasi stok dan kemudahan pencarian, sehingga Anda selalu tahu apa yang
-                    Anda miliki dan pelanggan Anda dapat menemukan apa yang mereka cari dengan cepat.
+        <div class="row align-items-center mb-5">
+
+            {{-- Image --}}
+            <div class="col-12 col-md-5 text-center mb-4 mb-md-0" style="max-width: 400px; margin: 0 auto;">
+                <img src="{{ asset('images/hehe.png') }}" class="img-fluid" alt="Ilustrasi platform"
+                    style="object-fit: contain;">
+            </div>
+
+            {{-- Text --}}
+            <div class="col-12 col-md-7">
+                <p class="lead fw-semibold text-muted text-center text-md-start p-4">
+                    Kami hadir sebagai platform manajemen produk terintegrasi yang membantu Anda melacak,
+                    mengelola, dan menampilkan inventaris dengan mudah.
                 </p>
             </div>
+
         </div>
+
 
         {{-- Bagian Fitur Utama / Statistik --}}
         <div class="row text-center mb-5">
@@ -111,7 +119,8 @@
         <div class="text-center mt-5 mb-5">
             <h2 class="fw-bold">Siap Mencari Produk Terbaik?</h2>
             <p class="lead mb-4">Jelajahi seluruh katalog produk kami dan temukan apa yang Anda butuhkan.</p>
-            <a href="{{ route('products') }}" class="btn btn-warning btn-lg shadow-lg">Mulai Cari Sekarang <i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="{{ route('products') }}" class="btn btn-warning btn-lg shadow-lg">Mulai Cari Sekarang <i
+                    class="fa-solid fa-magnifying-glass"></i></a>
         </div>
 
     </div>
