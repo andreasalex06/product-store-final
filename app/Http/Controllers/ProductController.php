@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProductController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index(Request $request)
     {
         // Parameter
@@ -88,13 +93,15 @@ class ProductController extends Controller
 
             $image = $request->file('image');
             $imageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
-
             Storage::disk('public')->putFileAs('products_image', $image, $imageName);
 
-            $newRequest = $request->all();
-            $newRequest['image'] = $imageName;
+            // $newRequest = $request->all();
+            // $newRequest['image'] = $imageName;
 
-            $product = Product::create($newRequest);
+            $validated['image'] = $imageName;
+            $validated['user_id'] = auth()->id();
+
+            $product = Product::create($validated);
 
             if ($product) {
                 return redirect()->route('products')->with('success', 'Produk berhasil ditambahkan');
@@ -108,8 +115,10 @@ class ProductController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $categories = CategoryProduct::orderBy('name')->get();
         $product = Product::findOrFail($id);
+        $categories = CategoryProduct::orderBy('name')->get();
+
+        $this->authorize('update', $product);
 
         if ($request->isMethod('post')) {
 
@@ -167,6 +176,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
+        $this->authorize('delete', $product);
 
         if ($request->isMethod('post') || $request->isMethod('delete')) {
 

@@ -24,12 +24,25 @@
             <div class="d-flex justify-content-center align-items-center">
 
                 {{-- Mobile toggle --}}
-                <div class="d-lg-none d-flex gap-2 me-2">
-                    @guest
-                        <a href="{{ route('login.form') }}" class="btn btn-primary btn-sm">Login</a>
-                        <a href="{{ route('register.form') }}" class="btn btn-outline-primary btn-sm">Register</a>
-                    @endguest
-                </div>
+
+                @auth
+                    <div class="d-lg-none">
+                        <ul class="list-unstyled d-flex m-0 align-items-center">
+                            {{-- Nama User --}}
+                            <li class="nav-item align-items-center">
+                                <a href="{{ route('home') }}" class=" ps-2">Halo, {{ Auth::user()->name }}
+                                </a>
+                            </li>
+                            {{-- Logout --}}
+                            <li class="nav-item ms-3">
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @endauth
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,51 +79,71 @@
                         </li>
                     @endauth
 
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold {{ request()->routeIs('faq') ? 'active fw-bold' : '' }}"
+                            href="{{ route('faq') }}">
+                            FAQ
+                        </a>
+                    </li>
+
                 </ul>
 
                 {{-- RIGHT MENU --}}
-                <ul class="navbar-nav ms-auto align-items-lg-center">
+                <ul class="navbar-nav ms-auto align-items-lg-center flex-lg-row gap-2 justify-content-center">
 
                     @auth
-                        {{-- Keranjang --}}
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('cart.index') ? 'active fw-semibold' : '' }}"
-                                href="{{ route('cart.index') }}">
-                                <i class="fa-solid fa-basket-shopping"></i> Keranjang
-                            </a>
-                        </li>
+                        <div class="d-flex flex-row align-items-center gap-2">
+                            {{-- Keranjang --}}
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('cart.index') ? 'active fw-semibold' : '' }}"
+                                    href="{{ route('cart.index') }}">
+                                    <i class="fa-solid fa-basket-shopping"></i> Keranjang
+                                </a>
+                            </li>
 
-                        {{-- Pesanan --}}
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('orders.index') ? 'active fw-semibold' : '' }}"
-                                href="{{ route('orders.index') }}">
-                                <i class="fa-solid fa-box"></i> Pesanan
-                            </a>
-                        </li>
+                            {{-- Pesanan --}}
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('orders.index') ? 'active fw-semibold' : '' }}"
+                                    href="{{ route('orders.index') }}">
+                                    <i class="fa-solid fa-box"></i> Pesanan
+                                </a>
+                            </li>
 
-                        @auth
-                            <span class="border-warning border-2 border-start ps-2">Halo, {{ Auth::user()->name }} </span>
-                        @endauth
-                        {{-- Logout --}}
-                        <li class="nav-item ms-3">
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-danger btn-sm">Logout</button>
-                            </form>
-                        </li>
+
+                            <div class="border-start border-warning border-3 ps-3 ms-3">
+                                <ul class="list-unstyled d-flex m-0 align-items-center">
+                                    {{-- Nama User --}}
+                                    <li class="nav-item align-items-center">
+                                        <a href="{{ route('home') }}" class=" ps-2 nav-link">Halo, {{ Auth::user()->name }}
+                                        </a>
+                                    </li>
+                                    {{-- Logout --}}
+                                    <li class="nav-item ms-3">
+                                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
                     @endauth
-
-                    @guest
-                        <li class="nav-item">
-                            <a href="{{ route('login.form') }}" class="btn btn-primary btn-sm me-1">Login</a>
-                        </li>
-
-                        <li class="nav-item">
+                    {{-- @guest
+                        <div class="d-lg-none d-flex gap-2 me-2">
+                            <a href="{{ route('login.form') }}" class="btn btn-primary btn-sm">Login</a>
                             <a href="{{ route('register.form') }}" class="btn btn-outline-primary btn-sm">Register</a>
-                        </li>
-                    @endguest
+                        </div>
+                    @endguest --}}
 
                 </ul>
+            </div>
+
+            <div class="d-flex gap-2 me-2">
+                @guest
+                    <a href="{{ route('login.form') }}" class="btn btn-primary btn-sm">Login</a>
+                    <a href="{{ route('register.form') }}" class="btn btn-outline-primary btn-sm">Register</a>
+                @endguest
             </div>
 
         </div>

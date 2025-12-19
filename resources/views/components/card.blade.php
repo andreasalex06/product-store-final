@@ -1,4 +1,4 @@
-<div class="card shadow-sm h-100">
+<div class="card shadow-sm h-100" style="min-width: 200px">
 
     <div class="ratio ratio-1x1 position-relative">
         <div class="position-absolute position-relative z-3 d-flex justify-content-end align-items-end">
@@ -24,8 +24,8 @@
         </p>
 
         <div class="d-flex justify-content-end align-items-center">
-            <a href="{{ route('products.show', ['id' => $product->id]) }}"
-                class="btn btn-sm rounded-3"><i class="fa-solid fa-info"></i></a>
+            <a href="{{ route('products.show', ['id' => $product->id]) }}" class="btn btn-sm rounded-3"><i
+                    class="fa-solid fa-info"></i></a>
 
             <form action="{{ route('cart.add', $product->id) }}" method="POST" class="">
                 @csrf
@@ -35,14 +35,19 @@
             </form>
 
             @auth
-                <a class="text-decoration-none btn btn-sm rounded-3"
-                    href=" {{ route('products.edit', ['id' => $product->id]) }} "><i class="fa-solid fa-pen-to-square"></i></a>
+                @can('update', $product)
+                    <a class="text-decoration-none btn btn-sm rounded-3"
+                        href=" {{ route('products.edit', ['id' => $product->id]) }} "><i
+                            class="fa-solid fa-pen-to-square"></i></a>
+                @endcan
 
-                <form action=" {{ route('products.delete', ['id' => $product->id]) }} " method="POST">
-                    @csrf
-                    <button type="submit" onclick=" return confirm('apakah anda yakin ingin mengapus produk?')"
-                        class="btn btn-sm rounded-3"><i class="fa-solid fa-trash"></i></button>
-                </form>
+                @can('delete', $product)
+                    <form action=" {{ route('products.delete', ['id' => $product->id]) }} " method="POST">
+                        @csrf
+                        <button type="submit" onclick=" return confirm('apakah anda yakin ingin mengapus produk?')"
+                            class="btn btn-sm rounded-3"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                @endcan
             @endauth
 
         </div>

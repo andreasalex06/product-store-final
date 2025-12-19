@@ -32,8 +32,12 @@
                     </div>
                     <div>
                         <a href=" {{ route('products') }} " class="btn btn-secondary">KEMBALI</a>
-                        <a href=" {{ route('products.edit', $product->id) }} " class="btn btn-success">EDIT</a>
-                        <a href=" {{ route('products.delete', $product->id) }} " class="btn btn-danger">DELETE</a>
+                        @can('update', $product)
+                            <a href=" {{ route('products.edit', $product->id) }} " class="btn btn-success">EDIT</a>
+                        @endcan
+                        @can('delete', $product)
+                            <a href=" {{ route('products.delete', $product->id) }} " class="btn btn-danger">DELETE</a>
+                        @endcan
                     </div>
                 </div>
 

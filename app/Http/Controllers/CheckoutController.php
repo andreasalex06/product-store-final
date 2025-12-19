@@ -7,6 +7,8 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InvoiceCheckout;
 
 class CheckoutController extends Controller
 {
@@ -59,6 +61,10 @@ class CheckoutController extends Controller
         // 3. KOSONGKAN KERANJANG
         CartItem::where('cart_id', $cart->id)->delete();
 
-        return redirect()->route('orders.index')->with('success', 'Checkout berhasil!');
+        // Mengirim email ke user dan mencetak invoice
+        Mail::to(Auth::user()->email)->queue(new InvoiceCheckout($order));
+
+        return redirect()->route('orders.index')->with('success', 'Checkout berhasil!! Invoice dikirim melalui email.');
+
     }
 }
