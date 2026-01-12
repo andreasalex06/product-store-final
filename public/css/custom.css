@@ -1,5 +1,59 @@
-.carousel-img {
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+/* Container utama untuk memotong overflow dan memberi efek pudar */
+.logo-slider-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+    position: relative;
+    /* Efek pudar di kiri dan kanan menggunakan mask */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.logo-slide-track {
+    display: flex;
+    width: calc(250px * 10); /* Sesuaikan: lebar item * jumlah total item */
+    animation: scroll-logos 30s linear infinite;
+}
+
+.logo-item {
+    width: 200px; /* Lebar area logo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+}
+
+.logo-item img {
+    height: 45px; /* Tinggi logo seragam agar rapi */
+    width: auto;
+    filter: grayscale(100%); /* Efek minimalis hitam putih */
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.logo-item img:hover {
+    filter: grayscale(0%); /* Berwarna kembali saat hover */
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Animasi Infinite Scroll */
+@keyframes scroll-logos {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-200px * 5)); /* Geser setengah dari total track */
+    }
+}
+
+/* Responsif untuk HP */
+@media (max-width: 768px) {
+    .logo-item {
+        width: 150px;
+        padding: 0 20px;
+    }
+    .logo-item img {
+        height: 30px;
+    }
 }

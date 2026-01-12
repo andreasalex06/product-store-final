@@ -60,18 +60,12 @@ class CartController extends Controller
 
 
     // Update jumlah item
-    public function update(Request $request, $itemId)
+    public function update(Request $request, $id)
     {
-        $item = CartItem::findOrFail($itemId);
-
-        $request->validate([
-            'quantity' => 'required|integer|min:1'
-        ]);
-
-        $item->quantity = $request->quantity;
-        $item->save();
-
-        return back()->with('success', 'Jumlah produk diperbarui.');
+        $item = CartItem::findOrFail($id);
+        $request->validate(['quantity' => 'required|integer|min:1|max:' . $item->product->stock]);
+        $item->update(['quantity' => $request->quantity]);
+        return back()->with('success', 'Keranjang diperbarui');
     }
 
 

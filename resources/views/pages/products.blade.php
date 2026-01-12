@@ -27,7 +27,7 @@
 
                         <h5 class="fw-bold mb-3">Filter Produk</h5>
 
-                        <form method="GET" action="{{ route('products') }}" class="w-100">
+                        <form method="GET" action="{{ route('products.index') }}" class="w-100">
 
                             {{-- Nama Produk --}}
                             <div class="mb-3">
@@ -42,7 +42,7 @@
                                 <select name="category_id" class="form-select form-select-sm">
                                     <option value="">Semua Kategori</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" @selected($category_id == $category->id)>
+                                        <option value="{{ $category->id }}" @selected(($category_id ?? null) == $category->id)>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
@@ -77,7 +77,7 @@
 
                             {{-- Buttons --}}
                             <div class="d-flex gap-2">
-                                <a href="{{ route('products') }}" class="btn btn-danger btn-sm w-50">Reset</a>
+                                <a href="{{ route('products.index') }}" class="btn btn-danger btn-sm w-50">Reset</a>
                                 <button type="submit" class="btn btn-primary btn-sm w-50">Filter</button>
                             </div>
 
@@ -110,7 +110,7 @@
                 </div>
 
                 {{-- Pagination --}}
-                <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+                <div class="d-flex justify-content-between align-items-center my-3 flex-wrap gap-2">
                     {{ $products->links() }}
 
                     <div class="text-muted small">

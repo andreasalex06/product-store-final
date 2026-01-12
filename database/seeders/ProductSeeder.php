@@ -19,10 +19,9 @@ class ProductSeeder extends Seeder
     {
         if (CategoryProduct::count() === 0) {
             DB::table('category_products')->insert([
-                ['name' => 'Elektronik'],
-                ['name' => 'Pakaian'],
-                ['name' => 'Makanan'],
-                ['name' => 'Aksesoris'],
+                ['name' => 'Segar'],
+                ['name' => 'Fillet'],
+                ['name' => 'Siangi'],
             ]);
         }
 

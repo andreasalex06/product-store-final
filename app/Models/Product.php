@@ -13,9 +13,10 @@ class Product extends Model
         'name',
         'description',
         'price',
+        'stock',
         'image',
         'category_product_id',
-        'user_id'
+        'user_id',
     ];
 
     public function category()
@@ -36,5 +37,16 @@ class Product extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        // Menghitung rata-rata kolom 'rating' dari relasi reviews
+        return round($this->reviews()->avg('rating'), 1) ?? 0;
     }
 }
