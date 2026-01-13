@@ -108,7 +108,7 @@ class CheckoutController extends Controller
             Product::find($item['product_id'])->decrement('stock', $item['quantity']);
         }
 
-        // Mengambil poin dari model Setting menggunakan helper yang kita buat tadi
+        // Mengambil poin setting dari model menggunakan helper
         $pointsEarned = (int) Setting::get('points_per_checkout', 0);
 
         if ($pointsEarned > 0) {

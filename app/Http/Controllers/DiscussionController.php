@@ -40,7 +40,7 @@ class DiscussionController extends Controller
     // 3. SIMPAN JAWABAN ADMIN
     public function answer(Request $request, $id)
     {
-        // Cek apakah user adalah Admin (Sesuaikan logika ini dengan sistem role Anda)
+        // Cek apakah user adalah Admin
         // Contoh sederhana: cek kolom is_admin di tabel users (jika ada)
         // Atau cek manual berdasarkan email tertentu
         if (Auth::user()->role !== 'admin') {
